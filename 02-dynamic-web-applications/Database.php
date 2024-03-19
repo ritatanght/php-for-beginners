@@ -2,22 +2,23 @@
 
 class Database
 {
-public $connection;
+  public $connection;
 
-public function __construct()
-{
-$dsn = "mysql:host=127.0.0.1;port=3306;dbname=myapp;user=root;password=root;charset=utf8mb4";
-$this->connection = new PDO($dsn);
-}
+  public function __construct($config)
+  {
+    $dsn = "mysql:" . http_build_query($config, "", ';');
 
-public function query($query)
-{
+    $this->connection = new PDO($dsn, 'root', 'root', [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
+  }
+
+  public function query($query)
+  {
 
 
-$statement = $this->connection->prepare($query);
+    $statement = $this->connection->prepare($query);
 
-$statement->execute();
+    $statement->execute();
 
-return $statement;
-}
+    return $statement;
+  }
 }

@@ -5,9 +5,16 @@ require 'functions.php';
 // require 'router.php';
 require 'Database.php';
 
-$db = new Database();
+$config = [
+  'host' => '127.0.0.1',
+  'port' => 3306,
+  'dbname' => 'myapp',
+  'charset' => 'utf8mb4'
+];
 
-$posts = $db->query("select * from posts")->fetchAll(PDO::FETCH_ASSOC);
+$db = new Database($config);
+
+$posts = $db->query("select * from posts")->fetchAll();
 
 
 
