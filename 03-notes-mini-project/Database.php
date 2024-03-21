@@ -3,6 +3,7 @@
 class Database
 {
   public $connection;
+  public $statement;
 
   public function __construct($config, $username = 'root', $password = 'root')
   {
@@ -14,11 +15,25 @@ class Database
   public function query($query, $params = [])
   {
 
+    $this->statement = $this->connection->prepare($query);
 
-    $statement = $this->connection->prepare($query);
+    $this->statement->execute($params);
 
-    $statement->execute($params);
+    return $this;
+  }
 
-    return $statement;
+  public function find()
+  {
+    return $this->statement->fetch();
+  }
+
+  public function findOrFail()
+  {
+    // this is going to call the other method created above
+    $result = $this->find();
+    if (!$result) {
+      abort();
+    }
+    return $result;
   }
 }
