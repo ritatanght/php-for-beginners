@@ -1,5 +1,7 @@
 <?php
 
+namespace Core;
+
 class Validator
 {
   // make sure the string is within the min and max range
