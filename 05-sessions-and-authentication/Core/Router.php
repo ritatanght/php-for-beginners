@@ -45,17 +45,28 @@ class Router
 
   public function only($key)
   {
-    dd($key);
-    //end($this->routes)['middleware'] = $key;
-    // $this->routes[array_key_last($this->routes)]['middleware'] = $key;
+    $this->routes[array_key_last($this->routes)]['middleware'] = $key;
 
-    // return $this;
+    return $this;
   }
 
   public function route($uri, $method)
   {
     foreach ($this->routes as $route) {
       if ($route['uri'] === $uri && $route['method'] === strtoupper($method)) {
+        // apply the middleware
+        if ($route['middleware'] === 'guest') {
+          if ($_SESSION['user'] ?? false) {
+            header('location: /');
+            exit();
+          }
+        }
+        if ($route['middleware'] === 'auth') {
+          if (!$_SESSION['user'] ?? false) {
+            header('location: /');
+            exit();
+          }
+        }
         return require base_path($route['controller']);
       }
     }
