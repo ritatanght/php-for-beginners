@@ -1,0 +1,16 @@
+{
+    "name": "labber/07-meet-composer",
+    "authors": [
+        {
+            "name": "Rita Tang",
+            "email": "doggymint@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Core\\": "Core/",
+            "Http\\": "Http/"
+        }
+    }
+}
